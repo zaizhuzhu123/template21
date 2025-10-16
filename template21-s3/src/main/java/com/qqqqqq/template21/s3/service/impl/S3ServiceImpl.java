@@ -36,7 +36,6 @@ import java.util.function.BiConsumer;
  * @author qmf
  */
 @Service
-@Validated
 @RequiredArgsConstructor
 @Slf4j
 public class S3ServiceImpl implements IS3Service {
@@ -47,22 +46,22 @@ public class S3ServiceImpl implements IS3Service {
     private final S3AsyncClient s3AsyncClient;
 
     @Override
-    public S3UploadRes uploadByBytes(@NotNull @Valid S3UploadByBytesReq req) {
+    public S3UploadRes uploadByBytes(S3UploadByBytesReq req) {
         return uploadByBytes(req, null);
     }
 
     @Override
-    public S3UploadRes uploadByBytes(@NotNull @Valid S3UploadByBytesReq req, BiConsumer<CompletedEvent, Throwable> action) {
+    public S3UploadRes uploadByBytes(S3UploadByBytesReq req, BiConsumer<CompletedEvent, Throwable> action) {
         return uploadByBytes(List.of(req), action).getFirst();
     }
 
     @Override
-    public List<S3UploadRes> uploadByBytes(@NotEmpty List<@NotNull @Valid S3UploadByBytesReq> reqList) {
+    public List<S3UploadRes> uploadByBytes(List<S3UploadByBytesReq> reqList) {
         return uploadByBytes(reqList, null);
     }
 
     @Override
-    public List<S3UploadRes> uploadByBytes(@NotEmpty List<@NotNull @Valid S3UploadByBytesReq> reqList, BiConsumer<CompletedEvent, Throwable> action) {
+    public List<S3UploadRes> uploadByBytes(List<S3UploadByBytesReq> reqList, BiConsumer<CompletedEvent, Throwable> action) {
         return getLionS3UploadRes(reqList, action);
     }
 
@@ -79,24 +78,24 @@ public class S3ServiceImpl implements IS3Service {
 
     @SneakyThrows
     @Override
-    public S3UploadRes uploadByUrl(@NotNull @Valid S3UploadByUrlReq req) {
+    public S3UploadRes uploadByUrl(S3UploadByUrlReq req) {
         return uploadByUrl(req, null);
     }
 
     @SneakyThrows
     @Override
-    public S3UploadRes uploadByUrl(@NotNull @Valid S3UploadByUrlReq req, BiConsumer<CompletedEvent, Throwable> action) {
+    public S3UploadRes uploadByUrl(S3UploadByUrlReq req, BiConsumer<CompletedEvent, Throwable> action) {
         final FileDownloader.FileBytes downloadObj = FileDownloader.download(req.getDownloadUrl());
         return uploadByBytes(S3UploadByBytesReq.builder().bytes(downloadObj.bytes()).fileRealName(downloadObj.fileName()).contentType(downloadObj.contentType()).dirKey(req.getDirKey()).build(), action);
     }
 
     @Override
-    public List<S3UploadRes> uploadByUrl(@NotEmpty List<@NotNull @Valid S3UploadByUrlReq> reqList) {
+    public List<S3UploadRes> uploadByUrl(List<S3UploadByUrlReq> reqList) {
         return uploadByUrl(reqList, null);
     }
 
     @Override
-    public List<S3UploadRes> uploadByUrl(@NotEmpty List<@NotNull @Valid S3UploadByUrlReq> reqList, BiConsumer<CompletedEvent, Throwable> action) {
+    public List<S3UploadRes> uploadByUrl(List<S3UploadByUrlReq> reqList, BiConsumer<CompletedEvent, Throwable> action) {
         return reqList.stream().map(s -> this.uploadByUrl(s, action)).toList();
     }
 

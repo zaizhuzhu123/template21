@@ -7,6 +7,9 @@ import com.qqqqqq.template21.frame.response.ResponseBuilder;
 import com.qqqqqq.template21.frame.retry.IRetryService;
 import com.qqqqqq.template21.runpod.api.RunpodApi;
 import com.qqqqqq.template21.runpod.request.RunRequest;
+import com.qqqqqq.template21.s3.request.S3UploadByUrlReq;
+import com.qqqqqq.template21.s3.response.S3UploadRes;
+import com.qqqqqq.template21.s3.service.IS3Service;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Data;
@@ -22,7 +25,6 @@ import java.util.List;
 /**
  * @author qmf
  */
-@Data
 @Tag(name = "Test")
 @RequestMapping("/web/test")
 @RestController
@@ -32,6 +34,7 @@ public class TestController {
     private final RedissonClient redissonClient;
     private final RunpodApi runpodApi;
     private final IRetryService retryService;
+    private final IS3Service s3Service;
 
     @JsonProperty("endpoint")
     private String endpoint;
@@ -44,14 +47,19 @@ public class TestController {
 //        final RBucket<String> testBlock = redissonClient.getBucket("testBlock_" + SystemClock.now());
 //        testBlock.set("test");
 
-        String token = "Bearer " + "PCLTQZWH3UP9MXGUS5OWRJ3IXHVXCPRXUPZBUKJE";
-        String endpointId = "yo5didn1kmrlfb";
-        final RunRequest runRequest = new RunRequest();
-        runRequest.setInput(new ParamsDTO());
-        final com.qqqqqq.template21.runpod.response.Response runResponse = runpodApi.run(token, endpointId, runRequest);
-        final com.qqqqqq.template21.runpod.response.Response statusResponse = runpodApi.status(token, endpointId, runResponse.getId());
+//        String token = "Bearer " + "PCLTQZWH3UP9MXGUS5OWRJ3IXHVXCPRXUPZBUKJE";
+//        String endpointId = "yo5didn1kmrlfb";
+//        final RunRequest runRequest = new RunRequest();
+//        runRequest.setInput(new ParamsDTO());
+//        final com.qqqqqq.template21.runpod.response.Response runResponse = runpodApi.run(token, endpointId, runRequest);
+//        final com.qqqqqq.template21.runpod.response.Response statusResponse = runpodApi.status(token, endpointId, runResponse.getId());
 
 //        final com.qqqqqq.template21.runpod.response.Response statusResponse = retryService.query(() -> runpodApi.status(token, endpointId, runResponse.getId()));
+
+        final S3UploadByUrlReq uploadByUrlReq = S3UploadByUrlReq.builder()
+                .downloadUrl("https://amber.7mfitness.com/i18n/audio/418307d2-6124-4c94-bcb5-a1fa5bc50b30.mp3?name=4O15T60k1tC9NpJEPWuksxztYz4jIbwmhlRXhKxeeC38VLuyNCqmbz")
+                .dirKey("test").build();
+        final S3UploadRes s3UploadRes = s3Service.uploadByUrl(uploadByUrlReq);
         return ResponseBuilder.success();
     }
 

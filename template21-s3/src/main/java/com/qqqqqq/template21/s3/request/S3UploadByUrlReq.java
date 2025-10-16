@@ -26,9 +26,4 @@ public class S3UploadByUrlReq {
     @Schema(description = "文件内容")
     @NotEmpty
     private String downloadUrl;
-
-    @Schema(description = "文件contentType")
-    @NotEmpty
-    private String contentType;
-
 }
