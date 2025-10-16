@@ -1,0 +1,13 @@
+server:
+  port: 8200
+  servlet:
+    context-path: /template21Test/
+spring:
+  application:
+    name: template21-test
+  main:
+    allow-bean-definition-overriding: true
+  threads:
+    virtual:
+      # 开启虚拟线程
+      enabled: true

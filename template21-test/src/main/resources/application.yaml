@@ -1,0 +1,22 @@
+spring:
+  profiles:
+    active: dev
+    group:
+      dev: [ dev_db,dev_s3,dev_redis ]
+knife4j:
+  enable: true
+  setting:
+    #    enableOpenAPI3: true
+    language: zh-CN
+    enable-swagger-models: true
+    swagger-model-name: 实体类列表
+    enable-document-manage: true
+    enable-version: true
+    #    enable-author: true
+    enable-footer: true
+    #    enable-footer-custom-content: true
+    footer-custom-content: Apache License 2.0 | Copyright © 2023-present
+#    enable-home-custom-content: true
+mybatis-flex:
+  global-config:
+    print-banner: false

@@ -2,8 +2,6 @@ package com.qqqqqq.template21.runpod.request;
 
 import lombok.Data;
 
-import java.util.Map;
-
 /**
  * @author qmf
  */

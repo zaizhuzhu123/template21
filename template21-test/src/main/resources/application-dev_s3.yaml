@@ -1,0 +1,6 @@
+s3:
+  access-key: 6fa29b0da6cdf1dfca27fe4b2f4a49df
+  secret-key: 1a76763294881d10d76850aa2c0aca9a4748a8fbd04cfade4191aaaaf7934895
+  endpoint-url: https://a8c3ffe3b6dda80d39b67263a28f00d3.r2.cloudflarestorage.com
+  bucket-name: 7mfitness-test
+  bucket-proxy: https://amber.7mfitness.com/
